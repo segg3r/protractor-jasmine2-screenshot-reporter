@@ -19,9 +19,9 @@ function Jasmine2ScreenShotReporter(opts) {
 
         // report marks
         marks = {
-            pending:'<span class="pending">~</span>',
-            failed: '<span class="failed">&#10007;</span>',
-            passed: '<span class="passed">&#10003;</span>'
+            pending:'<span class="pending">Skipped </span>',
+            failed: '<span class="failed">Failed </span>',
+            passed: '<span class="passed">Passed </span>'
         },
 
         statusCssClass = {
@@ -46,18 +46,20 @@ function Jasmine2ScreenShotReporter(opts) {
     var linkTemplate = _.template(
         '<li id="<%= id %>" class="<%= cssClass %>">' +
             '<%= mark %>' +
-            '<a href="<%= filename %>"><%= name %></a> ' +
+            '<%= name %>' +
             '(<%= duration %> s)' +
             '<%= reason %>' +
+			' -> <a class="br-screenshot-link" href="<%= filename %>">screenshot</a>' +
         '</li>'
     );
 
     var nonLinkTemplate = _.template(
-        '<li title="No screenshot was created for this test case." id="<%= id %>" class="<%= cssClass %>">' +
+        '<li id="<%= id %>" class="<%= cssClass %>">' +
             '<%= mark %>' +
             '<%= name %> ' +
             '(<%= duration %> s)' +
             '<%= reason %>' +
+			' -> screenshot is missing' +
         '</li>'
     );
 
@@ -232,11 +234,11 @@ function Jasmine2ScreenShotReporter(opts) {
     opts.userCss = Array.isArray(opts.userCss) ?  opts.userCss : opts.userCss ? [ opts.userCss ] : [];
     opts.totalSpecsDefined = null;
     opts.failedSpecs = 0;
-    opts.showSummary = opts.showSummary || true;
+    opts.showSummary = opts.hasOwnProperty('showSummary') ? opts.showSummary : true; 
     opts.showQuickLinks = opts.showQuickLinks || false;
     opts.browserCaps = {};
     opts.configurationStrings = opts.configurationStrings || {};
-    opts.showConfiguration = opts.showConfiguration || true;
+    opts.showConfiguration = opts.hasOwnProperty('showConfiguration') ? opts.showConfiguration : true;
     opts.reportTitle = opts.reportTitle || 'Report';
 
 
