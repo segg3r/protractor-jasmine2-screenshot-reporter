@@ -345,7 +345,11 @@ function Jasmine2ScreenShotReporter(opts) {
                     writeScreenshot(png, spec.filename);
                 });
             });
-        });
+        }, function(error) {
+			console.log('Error happened on creating test screenshot');
+			console.log(error);
+			return;
+		});
     };
 
     this.jasmineDone = function() {
