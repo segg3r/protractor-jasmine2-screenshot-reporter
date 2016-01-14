@@ -204,11 +204,19 @@ function Jasmine2ScreenShotReporter(opts) {
     };
 
     var getDestination = function(){
-        return (opts.dest || DEFAULT_DESTINATION) + '/';
+		var result = (opts.dest || DEFAULT_DESTINATION);
+		if (result.indexOf('/', result.length - 1) === -1) {
+			result += '/';
+		}
+		return result;
     };
 
     var getDestinationWithUniqueDirectory = function(){
-        return getDestination() + hat() + '/';
+        var result = getDestination() + hat();
+		if (result.indexOf('/', result.length - 1) === -1) {
+			result += '/';
+		}
+		return result;
     };
 
     var getCssLinks = function(cssFiles) {
